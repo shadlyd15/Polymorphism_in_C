@@ -22,6 +22,10 @@ typedef union{
 	abstract_t abstract;
 } abstract_interface_t;
 
+void print_abstract_name(abstract_t abs){
+	DEBUG_OK("Name : %s", abs.name);
+}
+
 int main(int argc, char const *argv[]){
 	DEBUG_OK("Polymorphic Interface Test In C");
 	
@@ -39,5 +43,8 @@ int main(int argc, char const *argv[]){
 	DEBUG_OK("B : %s", B.name);
 	DEBUG_OK("B.data : %d", B.data);
 	DEBUG_OK("abstract_interface : %s", abstract_interface.abstract.name);
+
+	print_abstract_name(*(abstract_t*)&A);
+	print_abstract_name(*(abstract_t*)&B);
 	return 0;
 }
