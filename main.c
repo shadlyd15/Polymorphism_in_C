@@ -12,14 +12,14 @@ typedef struct B_t{
 	int data;
 }B_t;
 
-typedef struct Abstruct_t{
+typedef struct abstract_t{ // Virtual Struct
 	char name[64];
-}Abstruct_t;
+}abstract_t;
 
 typedef union{
 	A_t A;
 	B_t B;
-	Abstruct_t abstruct;
+	abstract_t abstract;
 } abstract_interface_t;
 
 int main(int argc, char const *argv[]){
@@ -33,11 +33,11 @@ int main(int argc, char const *argv[]){
 	memcpy(B.name, "B", strlen("B"));
 
 	abstract_interface_t abstract_interface = {0};
-	memcpy(abstract_interface.abstruct.name, "abstract_interface", strlen("abstract_interface"));
+	memcpy(abstract_interface.abstract.name, "abstract_interface", strlen("abstract_interface"));
 	
 	DEBUG_OK("A : %s", A.name);
 	DEBUG_OK("B : %s", B.name);
 	DEBUG_OK("B.data : %d", B.data);
-	DEBUG_OK("abstract_interface : %s", abstract_interface.abstruct.name);
+	DEBUG_OK("abstract_interface : %s", abstract_interface.abstract.name);
 	return 0;
 }
