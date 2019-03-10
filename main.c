@@ -22,8 +22,8 @@ typedef union{
 	abstract_t abstract;
 } abstract_interface_t;
 
-void print_abstract_name(abstract_t abs){
-	DEBUG_OK("Name : %s", abs.name);
+void print_abstract_name(abstract_t * abs){
+	DEBUG_OK("Polymorphic Name : %s", abs->name);
 }
 
 int main(int argc, char const *argv[]){
@@ -36,15 +36,16 @@ int main(int argc, char const *argv[]){
 	B.data = 100;
 	memcpy(B.name, "B", strlen("B"));
 
-	abstract_interface_t abstract_interface = {0};
-	memcpy(abstract_interface.abstract.name, "abstract_interface", strlen("abstract_interface"));
-	
-	DEBUG_OK("A : %s", A.name);
-	DEBUG_OK("B : %s", B.name);
-	DEBUG_OK("B.data : %d", B.data);
-	DEBUG_OK("abstract_interface : %s", abstract_interface.abstract.name);
+	abstract_interface_t * abstract_interface = NULL;
 
-	print_abstract_name(*(abstract_t*)&A);
-	print_abstract_name(*(abstract_t*)&B);
+
+	DEBUG_OK("A : %s", A.name);
+	abstract_interface = &A;
+	print_abstract_name(abstract_interface);
+	
+	
+	DEBUG_OK("B : %s", B.name);
+	abstract_interface = &B;
+	print_abstract_name(abstract_interface);
 	return 0;
 }
