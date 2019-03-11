@@ -7,4 +7,4 @@ Polymorphic Abstract Interface In C
 - Polymorphism
 
 ## Abstract Class Implementation
-- Implement abstract class in C
+- Implementation technique of abstract class in C
