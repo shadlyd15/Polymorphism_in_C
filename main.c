@@ -1,51 +1,26 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
 #include "debug.h"
+#include "tcp_profile.h"
+#include "hdlc_profile.h"
+#include "communication_profile.h"
 
-typedef struct A_t{
-	char name[64];
-}A_t;
-
-typedef struct B_t{
-	char name[64];
-	int data;
-}B_t;
-
-typedef struct abstract_t{ // Virtual Struct
-	char name[64];
-}abstract_t;
-
-typedef union{
-	A_t A;
-	B_t B;
-	abstract_t abstract;
-} abstract_interface_t;
-
-void print_abstract_name(abstract_t * abs){
-	DEBUG_OK("Polymorphic Name : %s", abs->name);
+void generic_receive_ready(communication_profile_t * profile, char * data){
+	profile->receive_request(data);
 }
 
 int main(int argc, char const *argv[]){
-	DEBUG_OK("Polymorphic Interface Test In C");
-	
-	A_t A = {0};
-	memcpy(A.name, "A", strlen("A"));
-	
-	B_t B = {0};
-	B.data = 100;
-	memcpy(B.name, "B", strlen("B"));
+	communication_profile_t * tcp_profile = new_tcp_profile("192.168.1.112");
+	communication_profile_t * hdlc_profile = new_hdlc_profile(80);
 
-	abstract_interface_t * abstract_interface = NULL;
+	tcp_profile->receive_request("DLMS Packet");
+	hdlc_profile->receive_request("DLMS Packet");
 
+	hdlc_profile_t * hdlc = hdlc_profile->derived_obj;
+	DEBUG_OK("HDLC Port : %d", hdlc->port);
 
-	DEBUG_OK("A : %s", A.name);
-	abstract_interface = &A;
-	print_abstract_name(abstract_interface);
-	
-	
-	DEBUG_OK("B : %s", B.name);
-	abstract_interface = &B;
-	print_abstract_name(abstract_interface);
+	tcp_profile_t * tcp = tcp_profile->derived_obj;
+	DEBUG_OK("TCP Host : %s", tcp->host);
+
+	generic_receive_ready(tcp_profile, "Packet");
+	generic_receive_ready(hdlc_profile, "Packet");
 	return 0;
 }
