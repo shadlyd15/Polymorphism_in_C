@@ -1,4 +1,4 @@
-# Polymorphism in C
+# Polymorphism in C Programming
 Polymorphic Abstract Interface In C 
 
 ## Implementation of three core concepts of OOP
