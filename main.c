@@ -8,6 +8,7 @@ void generic_receive_ready(communication_profile_t * profile, char * data){
 }
 
 int main(int argc, char const *argv[]){
+	DEBUG_OK("Test Started");
 	communication_profile_t * tcp_profile = new_tcp_profile("192.168.1.112");
 	communication_profile_t * hdlc_profile = new_hdlc_profile(80);
 
